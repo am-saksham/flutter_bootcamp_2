@@ -36,80 +36,71 @@ class _RegisterViewState extends State<RegisterView> {
       appBar: AppBar(
         title: const Text("Register"),
       ),
-      body: FutureBuilder(
-        future: Firebase.initializeApp(
-          options: DefaultFirebaseOptions.currentPlatform,
-        ), builder: (BuildContext context, AsyncSnapshot<FirebaseApp> snapshot) {
-        switch (snapshot.connectionState) {
-
-          case ConnectionState.done:
-            return Column(
-              children: [
-                TextField(
-                  controller: _email,
-                  enableSuggestions: false,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(
-                    hintText: "Enter your email here",
-                  ),
-                ),
-                TextField(
-                  controller: _password,
-                  obscureText: true,
-                  enableSuggestions: false,
-                  autocorrect: false,
-                  decoration: const InputDecoration(
-                    hintText: "Enter your password here",
-                  ),
-                ),
-                TextButton(
-                  onPressed: () async {
-                    final email = _email.text;
-                    final password = _password.text;
-                    try {
-                      final userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
-                      print(userCredential);
-                    } on FirebaseAuthException catch (e) {
-                      if(e.code == "weak-password") {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: const Text('Weak Password'),
-                              content: SingleChildScrollView(
-                                child: ListBody(
-                                  children: <Widget>[
-                                    const Text('Please enter a strong password!'),
-                                    const Text("The Password should contains more than 6 characters."),
-                                  ],
-                                ),
-                              ),
-                              actions: <Widget>[
-                                TextButton(
-                                  child: Text('OK'),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      } else if(e.code == "email-already-in-use") {
-                        print("Email is already in use!");
-                      } else if(e.code == "invalid-email") {
-                        print("Invalid Email Entered!");
-                      }
-                    }
-                  },
-                  child: const Text("Register"),
-                ),
-              ],
-            );
-          default:
-            return const Text("Loading...");
-        }
-      },
+      body: Column(
+        children: [
+          TextField(
+            controller: _email,
+            enableSuggestions: false,
+            keyboardType: TextInputType.emailAddress,
+            decoration: const InputDecoration(
+              hintText: "Enter your email here",
+            ),
+          ),
+          TextField(
+            controller: _password,
+            obscureText: true,
+            enableSuggestions: false,
+            autocorrect: false,
+            decoration: const InputDecoration(
+              hintText: "Enter your password here",
+            ),
+          ),
+          TextButton(
+            onPressed: () async {
+              final email = _email.text;
+              final password = _password.text;
+              try {
+                final userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+                print(userCredential);
+              } on FirebaseAuthException catch (e) {
+                if(e.code == "weak-password") {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('Weak Password'),
+                        content: SingleChildScrollView(
+                          child: ListBody(
+                            children: <Widget>[
+                              const Text('Please enter a strong password!'),
+                              const Text("The Password should contains more than 6 characters."),
+                            ],
+                          ),
+                        ),
+                        actions: <Widget>[
+                          TextButton(
+                            child: Text('OK'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                } else if(e.code == "email-already-in-use") {
+                  print("Email is already in use!");
+                } else if(e.code == "invalid-email") {
+                  print("Invalid Email Entered!");
+                }
+              }
+            },
+            child: const Text("Register"),
+          ),
+          TextButton(onPressed: () {
+            Navigator.of(context).pushNamedAndRemoveUntil("/login", (route) => false,);
+          }, child: const Text("Already Registered? Login Here!"))
+        ],
       ),
     );
   }
