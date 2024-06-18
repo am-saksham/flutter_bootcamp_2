@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "874931774366",
+    "project_id": "saksham-flutter-bootcamp-2",
+    "storage_bucket": "saksham-flutter-bootcamp-2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:874931774366:android:be4791b7f44442a0d6ec8f",
+        "android_client_info": {
+          "package_name": "com.example.flutter_bootcamp_2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuC7uTGX9uvs7vxkLYwmv7hJsrRLCkFGM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
